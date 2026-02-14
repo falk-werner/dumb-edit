@@ -1,3 +1,5 @@
+use std::path::PathBuf;
+
 use crate::message::Message;
 use crate::mainmenu::MainMenu;
 use crate::dispatch::dispatch;
@@ -58,6 +60,18 @@ impl EditorApp {
         let _ = editor.take_focus();
         let filename = String::new();
         Self { app, win, receiver, editor, mainmenu, filename, modified: false }
+    }
+
+    pub fn load(&mut self, filename: &str) {
+        let name = PathBuf::from(filename);
+        if let Some(mut buffer) = self.editor.buffer() {
+            if let Some(filename) = name.file_name() {
+                self.win.set_label(&format!("{} - DumbEdit", &filename.to_string_lossy()));
+            }
+            self.modified = false;
+            self.filename.replace_range(.., name.to_str().unwrap());
+            buffer.load_file(name).unwrap();
+        }
     }
 
     pub fn run(mut self) {
