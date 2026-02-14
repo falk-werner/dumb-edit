@@ -11,7 +11,7 @@ env:
 
 jobs:
   build:
-    platform: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
