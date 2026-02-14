@@ -44,7 +44,7 @@ impl EditorApp {
         editor.set_linenumber_width(40);
 
         win.resizable(&col);
-        win.set_icon(Some(PngImage::from_data(include_bytes!("img/document.png")).unwrap()));
+        win.set_icon(Some(PngImage::from_data(include_bytes!("img/32x32.png")).unwrap()));
         win.set_callback(move |_| {
             if app::event() == Event::Close {
                 sender.send(Message::Quit);

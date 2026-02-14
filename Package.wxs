@@ -1,0 +1,8 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Id="com.github.falk_werner.dumb_edit" Name="Dumb Edit"
+           Manufacturer="Falk Werner" Version="0.1.0">
+    <File Id="dumb_edit.exe" Source="target/release/dumb-edit.exe" />
+    <Icon Id="dumb_edit.exe" SourceFile="src/img/32x32.png" />
+    <Property Id="ARPPRODUCTICON" Value="dumb_edit.exe" />
+  </Package>
+</Wix>
