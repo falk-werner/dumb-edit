@@ -9,10 +9,8 @@ pub fn dispatch(app: &mut EditorApp) {
     if let Some(msg) = app.receiver.recv() {
         match msg {
             Message::Change => {
-                if !app.modified {
-                    if ! app.win.label().ends_with("*") {
-                        app.win.set_label(&format!("{}*", app.win.label()));
-                    }
+                if !app.modified && ! app.win.label().ends_with("*") {
+                    app.win.set_label(&format!("{}*", app.win.label()));
                 }
                 app.modified = true;
             },

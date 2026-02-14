@@ -72,12 +72,10 @@ pub fn find_prev(app: &mut EditorApp) {
 }
 
 pub fn replace(app: &mut EditorApp) {    
-    if let Some(mut buffer) = app.editor.buffer() {
-        if let Some(pos) = buffer.selection_position() {
-            let text = app.mainmenu.replace.value();
-            buffer.replace(pos.0, pos.1, &text);
-            find_next(app);
-            let _ = app.mainmenu.replace_button.take_focus();
-        }
+    if let Some(mut buffer) = app.editor.buffer() && let Some(pos) = buffer.selection_position() {
+        let text = app.mainmenu.replace.value();
+        buffer.replace(pos.0, pos.1, &text);
+        find_next(app);
+        let _ = app.mainmenu.replace_button.take_focus();
     }
 }

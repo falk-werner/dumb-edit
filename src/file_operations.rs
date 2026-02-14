@@ -14,22 +14,15 @@ pub fn new(editor: &mut EditorApp) {
 
 pub fn open(editor: &mut EditorApp) {
     let mut dialog = NativeFileChooser::new(NativeFileChooserType::BrowseFile);
-    if let Ok(action) = dialog.try_show() {
-        match action {
-            FileDialogAction::Success => {
-                let name = dialog.filename();
-                if ! name.as_os_str().is_empty() {
-                    if let Some(mut buffer) = editor.editor.buffer() {
-                        if let Some(filename) = name.file_name() {
-                            editor.win.set_label(&format!("{} - DumbEdit", &filename.to_string_lossy()));
-                        }
-                        editor.modified = false;
-                        editor.filename.replace_range(.., name.to_str().unwrap());
-                        buffer.load_file(name).unwrap();
-                    }
-                }
+    if let Ok(FileDialogAction::Success) = dialog.try_show() {
+        let name = dialog.filename();
+        if ! name.as_os_str().is_empty() && let Some(mut buffer) = editor.editor.buffer() {
+            if let Some(filename) = name.file_name() {
+                editor.win.set_label(&format!("{} - DumbEdit", &filename.to_string_lossy()));
             }
-            _ => { }
+            editor.modified = false;
+            editor.filename.replace_range(.., name.to_str().unwrap());
+            buffer.load_file(name).unwrap();
         }
    }
 }
@@ -52,22 +45,15 @@ pub fn save(editor: &mut EditorApp) {
 
 pub fn save_as(editor: &mut EditorApp) {
     let mut dialog = NativeFileChooser::new(NativeFileChooserType::BrowseSaveFile);
-    if let Ok(action) = dialog.try_show() {
-        match action {
-            FileDialogAction::Success => {
-                let name = dialog.filename();
-                if ! name.as_os_str().is_empty() {
-                    if let Some(mut buffer) = editor.editor.buffer() {
-                        if let Some(filename) = name.file_name() {
-                            editor.win.set_label(&format!("{} - DumbEdit", &filename.to_string_lossy()));
-                        }
-                        editor.modified = false;
-                        editor.filename.replace_range(.., name.to_str().unwrap());
-                        buffer.save_file(name).unwrap();
-                    }
-                }
-            },
-            _ => {}
+    if let Ok(FileDialogAction::Success) = dialog.try_show() {
+        let name = dialog.filename();
+        if ! name.as_os_str().is_empty() && let Some(mut buffer) = editor.editor.buffer() {
+            if let Some(filename) = name.file_name() {
+                editor.win.set_label(&format!("{} - DumbEdit", &filename.to_string_lossy()));
+            }
+            editor.modified = false;
+            editor.filename.replace_range(.., name.to_str().unwrap());
+            buffer.save_file(name).unwrap();
         }
     }
 }
