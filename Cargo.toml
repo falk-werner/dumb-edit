@@ -5,3 +5,5 @@ edition = "2024"
 
 [dependencies]
 fltk = { version = "1.5.22", features = ["fltk-bundled"] }
+serde = { version = "1.0.228", features = ["derive"] }
+toml = "1.1.2"

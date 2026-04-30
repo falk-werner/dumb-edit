@@ -23,6 +23,7 @@ pub fn open(editor: &mut EditorApp) {
             editor.modified = false;
             editor.filename.replace_range(.., name.to_str().unwrap());
             buffer.load_file(name).unwrap();
+            editor.mainmenu.history.update(&editor.sender, &editor.filename);
         }
    }
 }
@@ -54,6 +55,7 @@ pub fn save_as(editor: &mut EditorApp) {
             editor.modified = false;
             editor.filename.replace_range(.., name.to_str().unwrap());
             buffer.save_file(name).unwrap();
+            editor.mainmenu.history.update(&editor.sender, &editor.filename);
         }
     }
 }

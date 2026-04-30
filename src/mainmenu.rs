@@ -1,5 +1,7 @@
 use crate::message::Message;
-use fltk::{app, button::{Button, ToggleButton, }, enums::Shortcut, frame::Frame, prelude::{ButtonExt, WidgetExt}, group, image::PngImage, input::Input, prelude::*};
+use crate::history::History;
+
+use fltk::{app, button::{Button, ToggleButton, }, enums::Shortcut, frame::Frame, group, image::PngImage, input::Input, prelude::{ButtonExt, WidgetExt, *}};
 
 pub struct MainMenu {
     pub frame: group::Flex,
@@ -10,6 +12,7 @@ pub struct MainMenu {
     pub find_next: Button,
     pub find_prev: Button,
     pub replace_button: Button,
+    pub history: History,
 }
 
 impl MainMenu {
@@ -21,6 +24,8 @@ impl MainMenu {
         new_button.set_shortcut(Shortcut::Ctrl | 'n');
         new_button.set_tooltip("New");
         new_button.emit(*sender, Message::New);
+        
+        let history = History::new(sender);
 
         let mut open_button = Button::default();
         open_button.set_image(Some(PngImage::from_data( include_bytes!("img/folder-open.png")).unwrap()));
@@ -79,8 +84,10 @@ impl MainMenu {
         replace_button.set_tooltip("Replace");
         replace_button.emit(*sender, Message::Replace);
 
+
         let button_size = 24;
         frame.fixed(&new_button, button_size);
+        frame.fixed(&history.button, button_size);
         frame.fixed(&open_button, button_size);
         frame.fixed(&save_button, button_size);
         frame.fixed(&save_as_button, button_size);
@@ -95,6 +102,6 @@ impl MainMenu {
         frame.end();
 
 
-        Self { frame, search, replace, match_case, line_wrap, find_next, find_prev, replace_button}
+        Self { frame, search, replace, match_case, line_wrap, find_next, find_prev, replace_button, history}
     }
 }
