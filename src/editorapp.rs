@@ -9,6 +9,7 @@ use fltk::{app, enums::{CallbackTrigger, Event, Font}, group::Flex, image::PngIm
 pub struct EditorApp {
     pub app: app::App,
     pub win: Window,
+    pub sender: app::Sender<Message>,
     pub receiver: app::Receiver<Message>,
     pub editor: text::TextEditor,
     pub mainmenu: MainMenu,
@@ -45,9 +46,10 @@ impl EditorApp {
 
         win.resizable(&col);
         win.set_icon(Some(PngImage::from_data(include_bytes!("img/32x32.png")).unwrap()));
+        let s = sender.clone();
         win.set_callback(move |_| {
             if app::event() == Event::Close {
-                sender.send(Message::Quit);
+                s.send(Message::Quit);
             }
         });
         
@@ -59,7 +61,7 @@ impl EditorApp {
 
         let _ = editor.take_focus();
         let filename = String::new();
-        Self { app, win, receiver, editor, mainmenu, filename, modified: false }
+        Self { app, win, sender, receiver, editor, mainmenu, filename, modified: false }
     }
 
     pub fn load(&mut self, filename: &str) {
@@ -70,7 +72,9 @@ impl EditorApp {
             }
             self.modified = false;
             self.filename.replace_range(.., name.to_str().unwrap());
-            buffer.load_file(name).unwrap();
+            if buffer.load_file(name).is_err() {
+                buffer.set_text("");
+            }
         }
     }
 

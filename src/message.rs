@@ -1,5 +1,6 @@
-#[derive(Copy, Clone)]
+#[derive(Clone)]
 pub enum Message {
+    Empty,
     Change,
     Quit,
 
@@ -14,4 +15,6 @@ pub enum Message {
     FindNext,
     FindPrev,
     Replace,
+
+    Load(String),
 }

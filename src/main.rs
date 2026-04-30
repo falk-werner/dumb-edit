@@ -6,6 +6,8 @@ mod message;
 mod mainmenu;
 mod editorapp;
 mod dispatch;
+mod history;
+mod config;
 
 use std::env;
 

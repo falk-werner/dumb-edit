@@ -8,6 +8,7 @@ use crate::search_operations;
 pub fn dispatch(app: &mut EditorApp) {
     if let Some(msg) = app.receiver.recv() {
         match msg {
+            Message::Empty => {},
             Message::Change => {
                 if !app.modified && ! app.win.label().ends_with("*") {
                     app.win.set_label(&format!("{}*", app.win.label()));
@@ -49,6 +50,9 @@ pub fn dispatch(app: &mut EditorApp) {
             },
             Message::Replace => {
                 search_operations::replace(app);
+            },
+            Message::Load(filename) => {
+                app.load(filename.as_str());
             }
         }
     }
