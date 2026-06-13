@@ -46,7 +46,7 @@ impl EditorApp {
 
         win.resizable(&col);
         win.set_icon(Some(PngImage::from_data(include_bytes!("img/32x32.png")).unwrap()));
-        let s = sender.clone();
+        let s = sender;
         win.set_callback(move |_| {
             if app::event() == Event::Close {
                 s.send(Message::Quit);

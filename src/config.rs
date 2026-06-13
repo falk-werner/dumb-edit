@@ -11,11 +11,7 @@ pub struct Config {
 
 fn get_config_file_path() -> Option<PathBuf> {
     let home = env::home_dir();
-    match home {
-        Some(home) => { Some(home.join("dumb_edit.toml")) },
-        None => { None },
-    }
-
+    home.map(|home| home.join("dumb_edit.toml"))
 }
 
 impl Config {
