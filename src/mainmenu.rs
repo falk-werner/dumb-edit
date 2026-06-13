@@ -84,6 +84,11 @@ impl MainMenu {
         replace_button.set_tooltip("Replace");
         replace_button.emit(*sender, Message::Replace);
 
+        let mut info_button = Button::default();
+        info_button.set_image(Some(PngImage::from_data( include_bytes!("img/info.png")).unwrap()));
+        info_button.set_tooltip("Info");
+        info_button.emit(*sender, Message::ShowInfo);
+
 
         let button_size = 24;
         frame.fixed(&new_button, button_size);
@@ -98,6 +103,7 @@ impl MainMenu {
         frame.fixed(&find_prev, button_size);
         frame.fixed(&replace_icon, button_size);
         frame.fixed(&replace_button, button_size);
+        frame.fixed(&info_button, button_size);
 
         frame.end();
 

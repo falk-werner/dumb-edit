@@ -16,5 +16,7 @@ pub enum Message {
     FindPrev,
     Replace,
 
+    ShowInfo,
+
     Load(String),
 }
