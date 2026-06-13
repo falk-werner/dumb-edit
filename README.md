@@ -6,26 +6,38 @@ Minimalstic text editor written in Rust.
 
 ![Dumb-Edit](img/dumb-edit.png)
 
-## Create Installer
+## Build Workflow
 
-Build release:
-
-```bash
-cargo build -r
-```
-
-Set the icon:
+### Build
 
 ```bash
-rcedit-x64.exe target/release/dumb-edit.exe --set-icon src/img/32x32.ico
+cargo build
 ```
 
-Create the msi installer package:
+### Unit Tests
 
 ```bash
-dotnet build
+cargo test
 ```
 
+### Static Code Analysis
+
+```bash
+cargo clippy
+```
+
+### Create Installer
+
+```bash
+./build_installer.sh
+```
+
+## Development Dependencies
+
+- [cargo](https://doc.rust-lang.org/cargo/)
+- [Wix Toolset](https://www.firegiant.com/wixtoolset/)  
+  requires dotnet
+- [rcedit](https://github.com/electron/rcedit)
 
 ## References
 
